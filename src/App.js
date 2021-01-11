@@ -1,25 +1,85 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Result from './components/Result';
+import KeyPad from './components/KeyPad';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+    
+    state = {
+        result: '0'
+    }
+
+    onClick = button => {
+        
+        
+
+        if(button === '='){
+            this.calulate()
+        }
+        else if (button === 'C'){
+            this.reset()
+        }
+        else if (button === 'CE'){
+            this.backspace()
+        }else {
+            if(this.state.result === '0'){
+                this.setState({
+                    result: '' + button
+                })
+            }else{
+                this.setState({
+                result: this.state.result + button
+               
+            })
+            }
+            
+        }
+    }
+            
+
+    calulate = () => {
+        try {
+            if(Number.isInteger(eval(this.state.result))){
+                this.setState({
+                    result:  (eval(this.state.result) || "") + ""
+                })
+            }else{
+                this.setState({
+                result:  (eval(this.state.result).toFixed(2) || "") + ""
+            })
+            }
+           
+            
+        } catch {
+            this.setState({
+                result: "error"
+            })
+        };
+    };
+
+    reset = () => {
+        this.setState({
+            result: '0'
+        })
+    };
+    backspace = () => {
+        this.setState({
+            result: this.state.result.slice(0,-1)
+        })
+    };
+    
+
+    render() {
+        return (
+            <div>
+                <div className="calculator-body">
+                    <h1 style={{color: "whitesmoke"}}>Calculator</h1>
+                    <Result result={this.state.result}/>
+                    <KeyPad onClick={this.onClick}/>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
