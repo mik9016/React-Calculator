@@ -9,10 +9,17 @@ body {
   background-image: linear-gradient(to right top, #485260, #6f647b, #9f7687, #c58d84, #d4ae82);
   background-repeat: no-repeat;
   background-size: 100%;
+  background-size: cover;
   
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+@media screen and (max-width:500px){
+  body{
+      min-width: 390px;
+      
+  }
 }
